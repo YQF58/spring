@@ -1,0 +1,674 @@
+:root {
+    --primary-color: #64ffda;
+    --secondary-color: #4a9eff;
+    --bg-color: #0a192f;
+    --text-color: #ccd6f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.honeycomb-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    background-image: radial-gradient(
+        circle at var(--mouse-x) var(--mouse-y),
+        rgba(74, 158, 255, 0.041) 0%,
+        rgba(100, 255, 218, 0.016) 15%,
+        transparent 35%
+    );
+    transition: background-image 0.8s ease;
+}
+
+.honeycomb-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at var(--mouse-x) var(--mouse-y),
+        rgba(74, 158, 255, 0.041) 0%,
+        transparent 25%
+    );
+    pointer-events: none;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+.container {
+    text-align: center;
+    z-index: 2;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    position: relative;
+}
+
+.title-group {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 12%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    position: relative;
+}
+
+.subtitle {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    opacity: 0.9;
+    color: var(--text-color);
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    margin-top: 2rem;
+    transform: translateX(15%) translateY(-30px);
+}
+
+.countdown {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    position: relative;
+    padding: 4rem;
+}
+
+.countdown::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    background-image: linear-gradient(var(--bg-color), var(--bg-color)), 
+                      linear-gradient(90deg, 
+                        var(--primary-color) 0%, 
+                        var(--secondary-color) 25%,
+                        var(--primary-color) 50%, 
+                        var(--secondary-color) 75%,
+                        var(--primary-color) 100%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    animation: borderRotate 4s linear infinite;
+    background-size: 200% 100%;
+}
+
+.countdown::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 15px;
+    background: linear-gradient(90deg, 
+                var(--primary-color) 0%, 
+                var(--secondary-color) 50%,
+                var(--primary-color) 100%);
+    opacity: 0.1;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+@keyframes borderRotate {
+    0% {
+        background-position: 0% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.time-block {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 2rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    position: relative;
+    z-index: 1;
+}
+
+.time-block span {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: 'Roboto Mono', monospace;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    min-width: 2ch;
+    display: inline-block;
+    text-align: center;
+}
+
+.time-block .label {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.message {
+    font-size: 1.5rem;
+    opacity: 0.8;
+    min-height: 2em;
+    position: absolute;
+    white-space: nowrap;
+    left: 50%;
+    bottom: 15%;
+    transform: translateX(-50%);
+}
+
+.message.typing::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: var(--primary-color);
+    animation: cursor-blink 0.8s infinite;
+}
+
+@keyframes cursor-blink {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .countdown {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .time-block {
+        width: 100px;
+        padding: 1rem;
+    }
+    
+    .time-block span {
+        font-size: 2rem;
+    }
+} 
+
+@keyframes glowPulse {
+    0% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes glowSize {
+    0% {
+        transform: scale(0.95);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(0.95);
+    }
+}
+
+.honeycomb-bg {
+    animation: glowSize 4s ease-in-out infinite;
+} 
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap'); 
+
+/* 修改数字显示相关的样式 */
+.digit-wrapper {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: 'Roboto Mono', monospace;
+    position: relative;
+    height: 1.2em;
+    overflow: hidden;
+    min-width: 2ch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+}
+
+.digit-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.625s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.625s linear;
+}
+
+.digit-slide.slide-enter {
+    transform: translateY(120%);
+}
+
+.digit-slide.slide-enter-active {
+    transform: translateY(0);
+    opacity: 0.5;
+}
+
+.digit-slide.slide-exit {
+    transform: translateY(0);
+    opacity: 0.5;
+}
+
+.digit-slide.slide-exit-active {
+    transform: translateY(-120%);
+    opacity: 0;
+} 
+
+.loading-icon {
+    display: inline-block;
+    font-size: 0.8em;
+    animation: pulse 1s infinite;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+} 
+
+.loading-effect {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 1rem;
+    color: var(--text-color);
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.energy-waves {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 12px;
+    margin-left: 4px;
+}
+
+.energy-wave {
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+    border-radius: 1px;
+    animation: waveAnimation 1s ease-in-out infinite;
+}
+
+.energy-wave:nth-child(2) { animation-delay: 0.1s; }
+.energy-wave:nth-child(3) { animation-delay: 0.2s; }
+.energy-wave:nth-child(4) { animation-delay: 0.3s; }
+.energy-wave:nth-child(5) { animation-delay: 0.4s; }
+.energy-wave:nth-child(6) { animation-delay: 0.5s; }
+.energy-wave:nth-child(7) { animation-delay: 0.6s; }
+.energy-wave:nth-child(8) { animation-delay: 0.7s; }
+
+@keyframes waveAnimation {
+    0%, 100% {
+        transform: scaleY(0.3);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+.year-text {
+    font-weight: bold;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    margin-left: 4px;
+}
+
+/* 添加发光效果 */
+.energy-waves::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    filter: blur(15px);
+    opacity: 0.15;
+    z-index: -1;
+    border-radius: 10px;
+} 
+
+/* 添加烟花粒子样式 */
+.firework-particle {
+    position: fixed;
+    pointer-events: none;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    z-index: 100;
+}
+
+@keyframes firework {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+} 
+
+/* 添加福字相关样式 */
+.fu-container {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.fu {
+    font-size: 2rem;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    transition: all 0.3s ease;
+    opacity: 0.3;
+}
+
+.fu::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    padding: 2px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0.3;
+    transition: all 0.3s ease;
+}
+
+.fu:hover {
+    opacity: 1;
+    transform: scale(1.1) rotate(10deg);
+}
+
+.fu:hover::before {
+    opacity: 1;
+}
+
+/* 添加福字分裂动画相关样式 */
+.fu-particle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fuFloat 2s ease-out forwards;
+}
+
+@keyframes fuFloat {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0);
+        opacity: 0;
+    }
+} 
+
+/* 添加祝福生成器样式 */
+.blessing-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.blessing-dialog.active {
+    opacity: 1;
+}
+
+.dialog-content {
+    background: var(--bg-color);
+    padding: 2rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.blessing-dialog.active .dialog-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.dialog-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 15px;
+    padding: 2px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    z-index: -1;
+}
+
+.dialog-content h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.input-group select,
+.input-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    border-radius: 5px;
+    background: rgba(10, 25, 47, 0.7);
+    color: var(--text-color);
+    outline: none;
+}
+
+.blessing-result {
+    min-height: 100px;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 5px;
+    background: rgba(100, 255, 218, 0.1);
+    white-space: pre-wrap;
+    display: none;
+}
+
+.dialog-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.dialog-buttons button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--bg-color);
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.dialog-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+} 
+
+/* 添加祝福触发器样式 */
+.blessing-trigger {
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    z-index: 10;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0.3;
+}
+
+.blessing-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.blessing-trigger:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.blessing-trigger:hover .blessing-icon {
+    filter: drop-shadow(0 0 5px var(--primary-color));
+    color: var(--secondary-color);
+}
+
+/* 添加点击时的动画效果 */
+.blessing-trigger:active {
+    transform: scale(0.95);
+} 
+
+/* 添加 toast 样式 */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--bg-color);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+} 

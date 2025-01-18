@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>春节快乐</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 50px 0;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 4px 6px rgba(255, 0, 0, 0.3); }
+            50% { text-shadow: 0 6px 12px rgba(255, 165, 0, 0.6); }
+            100% { text-shadow: 0 4px 6px rgba(255, 0, 0, 0.3); }
+        }
+
+        .button-container {
+            margin-top: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(45deg, #ff6a00, #ee0979);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        @keyframes firework {
+            0% { opacity: 1; transform: scale(0); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+
+        .circle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            animation: firework 1s ease-out infinite;
+        }
+
+        .blessing {
+            margin-top: 50px;
+            font-size: 1.5em;
+            animation: fadeIn 2s;
+            height: 1.5em;
+            overflow: hidden;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .video-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+        video {
+            max-width: 80%;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>春节快乐</h1>
+
+    <div class="button-container">
+        <a href="yanhua" class="btn">打开烟花</a>
+        <a href="daojishi" class="btn">打开倒计时</a>
+    </div>
+
+    <div class="blessing" id="blessing">愿新年为您带来平安、喜乐与成功！</div>
+
+    <div class="fireworks" id="fireworks"></div>
+
+    <div class="video-container">
+        <video src="1.mp4" controls></video>
+    </div>
+
+    <script>
+        const blessings = [
+            "愿新年为您带来平安、喜乐与成功！",
+            "恭贺新禧，万事如意！",
+            "新春快乐，身体健康！",
+            "阖家幸福，财源广进！",
+            "梦想成真，心想事成！"
+        ];
+
+        let currentBlessingIndex = 0;
+        function showNextBlessing() {
+            const blessingElement = document.getElementById('blessing');
+            blessingElement.style.opacity = 0;
+            setTimeout(() => {
+                blessingElement.textContent = blessings[currentBlessingIndex];
+                blessingElement.style.opacity = 1;
+                currentBlessingIndex = (currentBlessingIndex + 1) % blessings.length;
+            }, 500);
+        }
+
+        setInterval(showNextBlessing, 5000);
+
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.classList.add('circle');
+
+            const size = Math.random() * 10 + 10;
+            firework.style.width = `${size}px`;
+            firework.style.height = `${size}px`;
+            firework.style.top = `${Math.random() * window.innerHeight}px`;
+            firework.style.left = `${Math.random() * window.innerWidth}px`;
+            firework.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+
+            document.getElementById('fireworks').appendChild(firework);
+
+            setTimeout(() => firework.remove(), 1000);
+        }
+
+        setInterval(createFirework, 200);
+    </script>
+</body>
+</html>

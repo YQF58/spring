@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025年春节倒计时</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="honeycomb-bg"></div>
+    <div class="hexagon-container"></div>
+    <div class="container">
+        <div class="title-group">
+            <h1>春节倒计时</h1>
+            <div class="subtitle">
+                <div class="loading-effect">
+                    2025年加载中
+                    <div class="energy-waves">
+                        <span class="energy-wave"></span>
+                        <span class="energy-wave"></span>
+                        <span class="energy-wave"></span>
+                        <span class="energy-wave"></span>
+                        <span class="energy-wave"></span>
+                        <span class="energy-wave"></span>
+                        <span class="energy-wave"></span>
+                        <span class="energy-wave"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="countdown">
+            <div class="time-block">
+                <div class="digit-wrapper" id="days">
+                    <div class="digit-slide">00</div>
+                </div>
+                <span class="label">天</span>
+            </div>
+            <div class="time-block">
+                <div class="digit-wrapper" id="hours">
+                    <div class="digit-slide">00</div>
+                </div>
+                <span class="label">时</span>
+            </div>
+            <div class="time-block">
+                <div class="digit-wrapper" id="minutes">
+                    <div class="digit-slide">00</div>
+                </div>
+                <span class="label">分</span>
+            </div>
+            <div class="time-block">
+                <div class="digit-wrapper" id="seconds">
+                    <div class="digit-slide">00</div>
+                </div>
+                <span class="label">秒</span>
+            </div>
+        </div>
+        <div class="message"></div>
+        <div class="blessing-trigger">
+            <svg viewBox="0 0 24 24" fill="none" class="blessing-icon">
+                <path d="M21 11.5C21 16.75 12 21 12 21C12 21 3 16.75 3 11.5C3 6.25 7.02944 2 12 2C16.9706 2 21 6.25 21 11.5Z" 
+                      stroke="currentColor" stroke-width="2"/>
+                <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" 
+                      stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </div>
+        <div class="fu-container">
+            <div class="fu">福</div>
+        </div>
+        <div class="blessing-dialog" style="display: none;">
+            <div class="dialog-content">
+                <h3>春节祝福生成器</h3>
+                <div class="input-group">
+                    <label for="style">选择风格：</label>
+                    <select id="style">
+                        <option value="warm">温暖亲切</option>
+                        <option value="professional">专业正式</option>
+                        <option value="funny">幽默诙谐</option>
+                        <option value="literary">文艺优雅</option>
+                        <option value="traditional">传统古风</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="relation">选择关系：</label>
+                    <select id="relation"></select>
+                </div>
+                <div class="input-group sub-relation-group">
+                    <label for="subRelation">具体关系：</label>
+                    <select id="subRelation"></select>
+                </div>
+                <div class="input-group">
+                    <label for="name">称呼：</label>
+                    <input type="text" id="name" placeholder="请输入称呼">
+                </div>
+                <div class="input-group">
+                    <label for="wordCount">字数限制：</label>
+                    <select id="wordCount">
+                        <option value="50">50字以内</option>
+                        <option value="100" selected>100字以内</option>
+                        <option value="150">150字以内</option>
+                        <option value="200">200字以内</option>
+                    </select>
+                </div>
+                <div class="blessing-result"></div>
+                <div class="dialog-buttons">
+                    <button class="generate-btn">生成祝福</button>
+                    <button class="share-btn">复制分享</button>
+                    <button class="close-btn">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html> 

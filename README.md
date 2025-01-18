@@ -1,4 +1,4 @@
-<center> <h1>子辰网页聊天室</h1> </center>
+<center> <h1>YQF春节网站</h1> </center>
 
 ![Logo](https://blog.imyqf.cn/wp-content/uploads/2025/01/捕获.png)  
 
